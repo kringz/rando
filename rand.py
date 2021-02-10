@@ -2,7 +2,7 @@ import pymysql
 import random
 
 #
-# mysql creds
+# Mysql creds
 
 mydb = pymysql.connect(
     host="127.0.0.1",
@@ -14,28 +14,37 @@ mydb = pymysql.connect(
 min_id = 1 # set bottom of range
 max_id = 500000 # set top of range
 
-# select the range of rows in your table
+# Select the range of rows in your table
+########################################
+########################################
+#
+# 'column_name' = '0' is the *old* value 
+# which you want to update.
+#
+# Selecting by the old value ensures this 
+# script only updates rows which have not 
+# already been updated by this script.
 
 mycursor_all_1 = mydb.cursor()
-sql_all_1 = "SELECT * FROM `table` WHERE id >'" + str(min_id) + "' AND id <'" + str(max_id) + "'"
+sql_all_1 = "SELECT * FROM `table` WHERE id >'" + str(min_id) + "' AND id <'" + str(max_id) + "' WHERE column_name = '0'"
 mycursor_all_1.execute(sql_all_1)
 myresult_all_1 = mycursor_all_1.fetchall()
 
 for x in myresult_all_1:
 
-    # generate a random number based on your range
+    # Generate a random number based on your range
 
     numb=(random.randint(min_id,max_id))
     numb=str(numb)
 
-    # select a row with id=numb
+    # Select a row with id=numb
 
     mycursor_all_2 = mydb.cursor()
     sql_all_2 = "SELECT * FROM `table` WHERE id =" + numb
     mycursor_all_2.execute(sql_all_2)
     myresult_all_2 = mycursor_all_2.fetchall()
 
-    # update a column in the row
+    # Update a column in the row: 'column_name' ='1', the new value
 
     for y in myresult_all_2:
         domain = y[0]
