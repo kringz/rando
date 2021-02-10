@@ -40,7 +40,7 @@ for x in myresult_all_1:
     # Select a row with id=numb
 
     mycursor_all_2 = mydb.cursor()
-    sql_all_2 = "SELECT * FROM `table` WHERE id =" + numb
+    sql_all_2 = "SELECT * FROM `table` WHERE id =" + numb + " AND  WHERE column_name = '0'"
     mycursor_all_2.execute(sql_all_2)
     myresult_all_2 = mycursor_all_2.fetchall()
 
